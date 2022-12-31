@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     # local app
     'user.apps.UserConfig',
+    'core.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 CKEDITOR_UPLOAD_PATH = 'ck_uploads/'
+
+LOGIN_REDIRECT_URL = 'core:index'
+LOGOUT_REDIRECT_URL = 'user:login'
+LOGIN_URL =  'user:login'

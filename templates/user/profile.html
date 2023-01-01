@@ -8,12 +8,17 @@
     <div class="row">
         <div class="col-md-4 container mt-5">
             <img src="{{ profile.avatar.url }}" alt="{{ request.user.username }}" class="avatar">
-            <p><strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong></p>
+            <p><strong>{{ request.user.get_full_name }}</strong></p>
             <p>@{{ request.user.username }}</p>
             <p>{{ request.user.email }}</p>
             <p>{{ profile.gender }}</p>
             <p>{{ profile.country }}</p>
             <p>{{ profile.phone }}</p>
+            <p>Date Joined: {{ request.user.date_joined }}</p>
+            <p>Last Login: {{ request.user.last_login }}</p>
+            <p><strong>Bio</strong></p>
+            <p>{{ profile.bio }}</p>
+            <a href="{% url 'user:password_change' %}" class="btn btn-outline-danger" type="button">Change Password</a>
         </div>
         <div class="col-md-8">
             <h1 class="text-center">Profile</h1>

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic.edit import CreateView
@@ -11,7 +11,12 @@ from django.views import View
 
 from django.urls import reverse, reverse_lazy
 
-from user.forms import CustomUserCreationForm, LoginUserForm, ProfileForm, UserForm
+from user.forms import (
+    CustomUserCreationForm, 
+    LoginUserForm, 
+    ProfileForm, 
+    UserForm, 
+)
 from user.models import Profile
 # Create your views here.
 
@@ -82,3 +87,9 @@ class UserProfileDetailEditView(LoginRequiredMixin, View):
             "profile":profile,
         }
         return render(request, self.template_name, context)
+
+class PasswordChangeView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+    template_name = "user/password_change.html"
+    success_url = reverse_lazy("user:profile")
+    success_message = "Password Change Successfull"
+    

@@ -1,0 +1,12 @@
+.avatar {
+    vertical-align: middle;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.profile-form {
+    box-sizing: content-box;
+    margin: 20px auto 20px auto;
+    padding: 10px;
+}

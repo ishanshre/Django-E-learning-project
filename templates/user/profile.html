@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Profile{% endblock title %}
+{% block css %} <link rel="stylesheet" href="{% static 'user/css/style.css' %}"> {% endblock css %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 container mt-5">
+            <img src="{{ profile.avatar.url }}" alt="{{ request.user.username }}" class="avatar">
+            <p><strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong></p>
+            <p>@{{ request.user.username }}</p>
+            <p>{{ request.user.email }}</p>
+            <p>{{ profile.gender }}</p>
+            <p>{{ profile.country }}</p>
+            <p>{{ profile.phone }}</p>
+        </div>
+        <div class="col-md-8">
+            <h1 class="text-center">Profile</h1>
+            <form action="" method="post" class="profile-form">
+                {% csrf_token %}
+                {{ user_form|crispy }}
+                {{ profile_form|crispy }}
+                <input type="submit" value="Update" class="btn btn-outline-primary">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -22,8 +22,9 @@ class Profile(models.Model):
         OTHERS = "OTHERS", 'OTHERS'
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    avatar = models.ImageField(upload_to="user/profile/avatar", null=True, blank=True)
+    avatar = models.ImageField(upload_to="user/profile/avatar", default="default/default.png")
     bio = RichTextUploadingField(null=True, blank=True)
+    gender = models.CharField(max_length=10, choices=GENDER.choices, null=True, blank=True)
     country = models.CharField(max_length=32, choices=COUNTRIES_CHOOSE.choices, null=True, blank=True)
     phone = PhoneNumberField(blank=True, null=True)
     github = models.URLField(max_length=255, null=True, blank=True)

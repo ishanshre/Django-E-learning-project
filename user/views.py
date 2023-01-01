@@ -1,15 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic.edit import CreateView
+from django.views import View
 
 from django.urls import reverse, reverse_lazy
 
-from user.forms import CustomUserCreationForm, LoginUserForm
+from user.forms import CustomUserCreationForm, LoginUserForm, ProfileForm, UserForm
+from user.models import Profile
 # Create your views here.
 
 class UserRegisterView(SuccessMessageMixin, CreateView):
@@ -48,3 +51,34 @@ class UserLoginView(SuccessMessageMixin, LoginView):
         if request.user.is_authenticated:
             return redirect("core:index")
         return super().dispatch(request, *args, **kwargs)
+
+
+class UserProfileDetailEditView(LoginRequiredMixin, View):
+    template_name = "user/profile.html"
+    
+    def get(self, request, *args, **kwargs):
+        profile = get_object_or_404(Profile, user=request.user)
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=profile)
+        context = {
+            "user_form":user_form,
+            "profile_form":profile_form,
+            "profile":profile,
+        }
+        return render(request, self.template_name, context)
+    
+    def post(self, request, *args, **kwargs):
+        profile = get_object_or_404(Profile, user=request.user)
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, "Profile Updated Successfully")
+            return redirect("user:profile")
+        context = {
+            "user_form":user_form,
+            "profile_form":profile_form,
+            "profile":profile,
+        }
+        return render(request, self.template_name, context)

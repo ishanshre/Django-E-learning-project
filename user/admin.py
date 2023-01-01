@@ -18,7 +18,7 @@ class UserAdmin(BaseUserAdmin):
     add_form = CustomUserCreationForm
     fieldsets = BaseUserAdmin.fieldsets + (
         ("Extras", {
-            "fields":("date_of_birth","email_verified",),
+            "fields":("date_of_birth","email_verified","is_student","is_instructor"),
         }),
     )
     add_fieldsets = (

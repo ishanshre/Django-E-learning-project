@@ -21,7 +21,7 @@ class Subject(models.Model):
         return self.title
     
 
-class Courses(models.Model):
+class Course(models.Model):
     class DIFFICULTY_LEVEL(models.TextChoices):
         EASY = "Easy", 'Easy'
         MEDIUM = "Medium", 'Medium'
@@ -44,7 +44,7 @@ class Courses(models.Model):
 
 
 class Module(models.Model):
-    course = models.ForeignKey(Courses, on_delete=models.CASCADE, related_name='modules')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='modules')
     title = models.CharField(max_length=255)
     description = RichTextUploadingField()
     order = OrderField(blank=True, for_fields=['course'])
@@ -53,7 +53,7 @@ class Module(models.Model):
         ordering = ['order']
     
     def __str__(self):
-        return f'#{self.order}. {self.titel}'
+        return f'#{self.order}. {self.title}'
 
 class Content(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name="contents")

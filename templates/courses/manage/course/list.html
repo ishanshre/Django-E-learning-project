@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% block title %}Manage Course{% endblock title %}
+{% block body %}
+<div class="container">
+    <h1>Manage Course</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>S.N.</th>
+                <th>Course Title</th>
+                <th>Subject</th>
+                <th>Level</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in my_courses %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ course.title }}</td>
+                    <td>{{ course.subject }}</td>
+                    <td>{{ course.level }}</td>
+                    <td>{{ course.duration }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock body %}

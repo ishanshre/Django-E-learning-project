@@ -1,9 +1,73 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% block title %}{{ subject.title }}{% endblock title %}
+{% block css %} <link rel="stylesheet" href="{% static 'core/css/style.css' %}"> {% endblock css %}
 {% block body %}
 <div class="container">
-    <h1>{{ subject.title }}</h1>
-    <p>{{ subject.description|safe }}</p>  
-    
+    <div class="subject-container">
+        <h1>{{ subject.title }}</h1>
+        <p>{{ subject.description|safe }}</p>  
+    </div>
+    <section class="pt-5 pb-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <h3 class="mb-3">Courses</h3>
+            </div>
+            <div class="col-6 text-right">
+              <a
+                class="btn btn-primary mb-3 mr-1"
+                href="#carouselExampleIndicators2"
+                role="button"
+                data-slide="prev"
+              >
+                <i class="fa fa-arrow-left"></i>
+              </a>
+              <a
+                class="btn btn-primary mb-3"
+                href="#carouselExampleIndicators2"
+                role="button"
+                data-slide="next"
+              >
+                <i class="fa fa-arrow-right"></i>
+              </a>
+            </div>
+            <div class="col-12">
+              <div
+                id="carouselExampleIndicators2"
+                class="carousel slide"
+                data-ride="carousel"
+              >
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <div class="row">
+                      {% for course in subject.courses.all %}
+                      <div class="col-md-4 mb-3">
+                        <div class="card">
+                          <img
+                            class="img-fluid"
+                            alt="100%x280"
+                            src="{{ course.preview.url }}"
+                          />
+                          <a href="{% url 'core:course_detail' course.slug %}" class="link">
+                            <div class="card-body">
+                              <h4 class="card-title">{{ course.title }}</h4>
+                              <p class="card-text">
+                                {{ course.description|safe }}
+                              </p>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
 </div>
 {% endblock body %}

@@ -31,6 +31,7 @@ class Course(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     description = RichTextUploadingField()
+    preview = models.ImageField(upload_to="courses/preview", default="default/default_preview.jpg")
     level = models.CharField(max_length=6, choices=DIFFICULTY_LEVEL.choices, default=DIFFICULTY_LEVEL.EASY)
     duration = models.PositiveIntegerField(default=1)
     created = models.DateTimeField(auto_now_add=True)

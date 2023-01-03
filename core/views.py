@@ -28,4 +28,12 @@ class SubjectDetailView(DetailView):
 
     def get_queryset(self):
         return Subject.objects.filter(slug=self.kwargs['slug'])
-    
+
+
+class CourseDetailView(DetailView):
+    model = Course
+    context_object_name = "course"
+    template_name = "courses/course_detail.html"
+
+    def get_queryset(self):
+        return Course.objects.filter(slug=self.kwargs['slug'])

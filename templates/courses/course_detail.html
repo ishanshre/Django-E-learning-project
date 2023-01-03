@@ -1,0 +1,54 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}{{ course.title }}{% endblock title %}
+{% block css %} <link rel="stylesheet" href="{% static 'core/css/style.css' %}"> {% endblock css %}
+{% block body %}
+<div class="container">
+    <div>
+        <div>
+            <img src="{{ course.preview.url }}" alt="" height="300px" width="auto">
+        </div>
+        <h1>{{ course.title }}</h1>
+        <p>{{ course.description|safe }}</p>
+        <p><strong>Level: {{ course.level }}</strong></p>
+        <p><strong>Created at:</strong>{{ course.created|timesince }} ago</p>
+        <p><strong>Updated at:</strong>{{ course.updated|timesince }} ago</p>
+    </div>
+    <div class="accordion" id="accordionExample">
+        {% for module in course.modules.all %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                {{ module.title }} #{{ module.order }}
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>{{ module.description|safe }}</strong>
+              </div>
+
+              <div class="accordion" id="accordionExample">
+                {% for content in module.contents.all %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Content Title #{{ content.order }}
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <strong>Content Description</strong>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+
+
+
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+</div>
+{% endblock body %}

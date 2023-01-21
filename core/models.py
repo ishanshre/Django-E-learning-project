@@ -58,45 +58,13 @@ class Module(models.Model):
 
 class Content(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name="contents")
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, limit_choices_to={
-        "model_in":(
-            'text',
-            'video',
-            'image',
-            'file',
-        )
-    })
-    object_id = models.PositiveIntegerField()
-    item = GenericForeignKey('content_type','object_id')
+    contentText = RichTextUploadingField(null=True, blank=True)
+    contentFile = models.FileField(upload_to="contents/files", null=True, blank=True)
+    contentImage = models.FileField(upload_to="contents/images", null=True, blank=True)
+    contentVideo = models.FileField(upload_to="contents/images", null=True, blank=True)
     order = OrderField(blank=True, for_fields=['module'])
+    
 
     class Meta:
         ordering = ['order']
     
-
-
-class ItemBase(models.Model):
-    owner = models.ForeignKey(User, related_name="%(class)s_related", on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-    
-    def __str__(self):
-        return self.title
-    
-
-class Text(ItemBase):
-    content = RichTextUploadingField()
-
-class File(ItemBase):
-    file = models.FileField(upload_to="contents/files")
-
-class Image(ItemBase):
-    file = models.FileField(upload_to="contents/images")
-
-class Video(ItemBase):
-    url = models.URLField()
-

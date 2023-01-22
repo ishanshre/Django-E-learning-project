@@ -1,9 +1,16 @@
 {% extends "base/base.html" %}
 {% block title %}Manage Course{% endblock title %}
 {% block body %}
-<div class="container">
-    <h1>Manage Course</h1>
-    <table class="table">
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-10">
+            <h1 class="text-center">Manage Course</h1>
+        </div>
+        <div class="col-md-2">
+            <a type="submit" class="btn btn-outline-warning" href="{% url 'core:manage_course_add' %}" role="button">Add</a>
+        </div>
+    </div>
+    <table class="table mt-2">
         <thead>
             <tr>
                 <th>S.N.</th>
@@ -17,8 +24,8 @@
             {% for course in my_courses %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ course.title }}</td>
-                    <td>{{ course.subject }}</td>
+                    <td><a href="{% url 'core:course_detail' course.slug %}" style="text-decoration: none; color: black;">{{ course.title }}</a></td>
+                    <td><a href="{% url 'core:subject_detail' course.subject.slug %}" style="text-decoration: none; color: black;">{{ course.subject }}</a></td>
                     <td>{{ course.level }}</td>
                     <td>{{ course.duration }}</td>
                 </tr>

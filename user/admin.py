@@ -13,19 +13,19 @@ class ProfileInline(admin.StackedInline):
 
 @admin.register(get_user_model())
 class UserAdmin(BaseUserAdmin):
-    list_display = ['username','email','is_staff','email_verified']
+    list_display = ['username','email','is_staff','email_verified', 'is_instructor']
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
     fieldsets = BaseUserAdmin.fieldsets + (
         ("Extras", {
-            "fields":("date_of_birth","email_verified","is_student","is_instructor"),
+            "fields":("date_of_birth", "email_verified", "is_instructor"),
         }),
     )
     add_fieldsets = (
         (
             "Create User", {
                 "classes":("wide",),
-                "fields":("username","email","password1","password2"),
+                "fields":("username", "email", "password1", "password2"),
             }
         ),
     )

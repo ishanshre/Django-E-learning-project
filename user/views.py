@@ -93,3 +93,12 @@ class PasswordChangeView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
     success_url = reverse_lazy("user:profile")
     success_message = "Password Change Successfull"
     
+
+
+class BeacomeInstructor(LoginRequiredMixin, View):
+    def post(self, request):
+        user = request.user
+        user.is_instructor = True
+        user.save()
+        messages.success(request, "You have successfull become a instructor")
+        return redirect("core:index")

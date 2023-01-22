@@ -11,7 +11,6 @@ from user.countries import COUNTRIES_CHOOSE
 
 
 class User(AbstractUser):
-    is_student = models.BooleanField(default=False)
     is_instructor = models.BooleanField(default=False)
     email = models.EmailField(_("Email Address"),max_length=255, unique=True)
     date_of_birth = models.DateTimeField(null=True, blank=True)
